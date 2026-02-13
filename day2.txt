@@ -1,0 +1,102 @@
+PART 1: Prepare Ubuntu Server (inside VM)
+1. Check IP address of the VM
+Login to Ubuntu Server and run:
+ip a
+Look for something like:
+inet 192.168.xxx.xxx
+This is the VM IP.
+If you don’t see an IP → VMware network must be NAT or Bridged.
+________________________________________
+2. Install OpenSSH Server
+sudo apt update
+sudo apt install openssh-server -y
+Check status:
+sudo systemctl status ssh
+You should see active (running).
+________________________________________
+3. Allow SSH through firewall (if enabled)
+sudo ufw allow ssh
+sudo ufw reload
+Check:
+sudo ufw status
+________________________________________
+PART 2: Test SSH from Windows (important)
+Open PowerShell on Windows.
+ssh username@VM_IP
+Example:
+ssh jaga@192.168.200.129
+•	Type yes when asked
+•	Enter Ubuntu password
+ If you get a shell → SSH works
+ If not → stop and fix before VS Code
+________________________________________
+PART 3: Install VS Code Requirements (Windows)
+1. Install VS Code
+Download and install Visual Studio Code.
+________________________________________
+2. Install “Remote – SSH” Extension
+In VS Code:
+•	Extensions (Ctrl+Shift+X)
+•	Search Remote - SSH
+•	Install
+________________________________________
+PART 4: Connect Ubuntu Server to VS Code via SSH
+1. Open Command Palette
+In VS Code:
+Ctrl + Shift + P
+Type:
+Remote-SSH: Connect to Host
+________________________________________
+2. Add New SSH Host
+Select:
++ Add New SSH Host
+Enter:
+ssh username@VM_IP
+Example:
+ssh jaga@192.168.200.129
+Press Enter.
+Choose SSH config file:
+C:\Users\YOUR_USERNAME\.ssh\config
+________________________________________
+3. Connect
+Again:
+Ctrl + Shift + P
+→ Remote-SSH: Connect to Host
+→ username@VM_IP
+Choose platform:
+Linux
+Enter password.
+✔ VS Code opens a new window connected to Ubuntu Server
+________________________________________
+PART 5: Verify You Are Inside the VM
+In VS Code terminal:
+hostname
+It should show your Ubuntu server hostname, not Windows.
+________________________________________
+PART 6: Open Folder from Ubuntu Server
+In VS Code (SSH window):
+File → Open Folder
+Example:
+/home/username
+Click OK.
+You are now editing Ubuntu files directly.
+________________________________________
+Common Errors & Fixes
+ Connection timed out
+•	Wrong IP
+•	VM network not NAT/Bridged
+•	SSH service not running
+Fix:
+sudo systemctl restart ssh
+________________________________________
+ Permission denied
+•	Wrong username
+•	Wrong password
+Check:
+whoami
+________________________________________
+VS Code asks password every time
+Normal for now.
+Later you can setup SSH key-based login.
+
+
