@@ -1,0 +1,143 @@
+✅ DAY 5 – AWS TO TERRAFORM COMPLETE SETUP
+PART 1: CREATE AWS ACCOUNT
+STEP 1: Open AWS Website
+
+Go to:
+https://aws.amazon.com
+
+Click Create an AWS Account
+
+STEP 2: Enter Details
+
+• Email ID
+• Account name
+• Verify email
+
+STEP 3: Set Password
+
+• Create strong password
+• Confirm password
+
+STEP 4: Enter Contact Information
+
+Select: Personal
+Fill name, phone, address, country
+
+STEP 5: Add Payment Method
+
+Enter debit/credit card details
+
+⚠ Required for Free Tier verification
+
+STEP 6: Identity Verification
+
+Enter phone number
+Verify using OTP
+
+STEP 7: Select Support Plan
+
+Choose: Basic (Free)
+
+Wait for activation email.
+
+PART 2: CREATE IAM USER (FOR TERRAFORM)
+STEP 1: Login to AWS Console
+
+Search → IAM
+
+STEP 2: Create User
+
+IAM → Users → Create user
+
+• Username: terraform-user
+• Access type: Programmatic access
+
+Click Next
+
+STEP 3: Attach Permission
+
+Attach policy:
+✔ AdministratorAccess
+
+Click Create user
+
+STEP 4: Save Credentials
+
+Download:
+• Access Key ID
+• Secret Access Key
+
+PART 3: INSTALL AWS CLI IN UBUNTU
+Update system
+sudo apt update -y
+sudo apt install unzip curl -y
+
+Install AWS CLI
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+Configure AWS CLI
+aws configure
+
+
+Enter:
+
+• Access Key
+• Secret Key
+• Region (example: us-east-1)
+• Output: json
+
+PART 4: INSTALL TERRAFORM
+sudo apt update -y
+sudo apt install gnupg software-properties-common curl -y
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update -y
+sudo apt install terraform -y
+
+
+Check:
+
+terraform -version
+
+PART 5: CLONE TERRAFORM PROJECT
+git clone https://github.com/jagadeeshkanna97/terraform-dev.git
+cd terraform-dev
+
+PART 6: RUN TERRAFORM COMMANDS
+Initialize
+terraform init
+
+Plan
+terraform plan
+
+Apply
+terraform apply
+
+
+Type:
+
+yes
+
+
+✔ EC2 instance created
+✔ Security group created
+✔ Infrastructure deployed
+
+OPTIONAL: DESTROY RESOURCES
+terraform destroy
+
+
+Type:
+
+yes
+
+✅ FINAL OUTPUT OF DAY 5
+
+✔ AWS Account Created
+✔ IAM User Created
+✔ AWS CLI Configured
+✔ Terraform Installed
+✔ GitHub Terraform Project Cloned
+✔ EC2 Created Using Terraform
