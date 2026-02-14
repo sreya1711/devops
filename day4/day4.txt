@@ -1,0 +1,68 @@
+Perfect 👍
+Here is your Day 4 – Jenkins Installation + Build Trigger Setup
+You can paste this into day4/day4.txt ✅
+
+📌 Day 4 – Jenkins Installation & Trigger Setup
+Day 4 – Jenkins Installation and Trigger Setup
+
+1. Update system
+sudo apt update
+sudo apt upgrade -y
+
+2. Install Java (Jenkins requirement)
+sudo apt install openjdk-17-jdk -y
+
+Check Java version
+java -version
+
+3. Add Jenkins key
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
+/usr/share/keyrings/jenkins-keyring.asc > /dev/null
+
+4. Add Jenkins repository
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+/etc/apt/sources.list.d/jenkins.list > /dev/null
+
+5. Update packages again
+sudo apt update
+
+6. Install Jenkins
+sudo apt install jenkins -y
+
+7. Start Jenkins
+sudo systemctl start jenkins
+
+8. Enable Jenkins at boot
+sudo systemctl enable jenkins
+
+9. Check Jenkins status
+sudo systemctl status jenkins
+
+10. Open Jenkins in browser
+http://localhost:8080
+(or)
+http://<your-server-ip>:8080
+
+11. Get Jenkins initial admin password
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+Copy password and paste in browser.
+Install suggested plugins.
+Create admin user.
+
+🔥 Create Job in Jenkins
+1. Click "New Item"
+2. Enter job name
+3. Select "Freestyle project"
+4. Click OK
+
+🔥 Setup Trigger in Jenkins
+1. Go to job → Configure
+2. Scroll to "Build Triggers"
+3. Select "Poll SCM"
+4. Add schedule:
+
+H/2 * * * *
+
+(This checks every 2 minutes)
