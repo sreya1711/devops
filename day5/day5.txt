@@ -1,118 +1,243 @@
-✅ DAY 5 – AWS TO TERRAFORM COMPLETE SETUP
-PART 1: CREATE AWS ACCOUNT
-STEP 1: Open AWS Website
+Day 5 – AWS Account → IAM → EC2 → Terraform Setup
+🌩 PART 1: Create AWS Account
+🔹 What is AWS?
+
+Amazon Web Services (AWS) is a cloud computing platform provided by Amazon.
+
+✅ Step 1: Open AWS Website
 
 Go to:
+
 https://aws.amazon.com
+
 
 Click Create an AWS Account
 
-STEP 2: Enter Details
+✅ Step 2: Enter Email & Account Name
 
-• Email ID
-• Account name
-• Verify email
+Enter Email ID
 
-STEP 3: Set Password
+Enter Account Name (Example: DevOps-Learning)
 
-• Create strong password
-• Confirm password
+Click Verify Email
 
-STEP 4: Enter Contact Information
+Enter verification code
 
-Select: Personal
-Fill name, phone, address, country
+✅ Step 3: Create Root Password
 
-STEP 5: Add Payment Method
+Set strong password
 
-Enter debit/credit card details
+Confirm password
 
-⚠ Required for Free Tier verification
+Click Continue
 
-STEP 6: Identity Verification
+✅ Step 4: Contact Information
 
-Enter phone number
-Verify using OTP
+Select:
 
-STEP 7: Select Support Plan
+Personal
 
-Choose: Basic (Free)
 
-Wait for activation email.
+Fill:
 
-PART 2: CREATE IAM USER (FOR TERRAFORM)
-STEP 1: Login to AWS Console
+Full Name
 
-Search → IAM
+Phone
 
-STEP 2: Create User
+Address
 
-IAM → Users → Create user
+Country
 
-• Username: terraform-user
-• Access type: Programmatic access
+✅ Step 5: Add Payment Details
 
-Click Next
+Enter Debit/Credit card
+⚠ AWS verifies card (small refundable amount)
 
-STEP 3: Attach Permission
+✅ Step 6: Identity Verification
 
-Attach policy:
-✔ AdministratorAccess
+Enter phone
 
-Click Create user
+Choose SMS/Call
 
-STEP 4: Save Credentials
+Enter OTP
 
-Download:
-• Access Key ID
-• Secret Access Key
+✅ Step 7: Select Support Plan
 
-PART 3: INSTALL AWS CLI IN UBUNTU
-Update system
+Choose:
+
+Basic (Free)
+
+✅ Step 8: Wait for Activation
+
+Account activation may take a few minutes.
+
+🖥 PART 2: Create Ubuntu EC2 Instance
+🔹 Go to EC2
+
+Search:
+
+EC2
+
+
+Open Amazon EC2
+
+✅ Step 1: Launch Instance
+
+Click Launch Instance
+
+✅ Step 2: Name
+Ubuntu-Server
+
+✅ Step 3: Choose AMI
+
+Select:
+
+Ubuntu Server 22.04 LTS
+
+✅ Step 4: Instance Type
+t2.micro (Free Tier)
+
+✅ Step 5: Create Key Pair
+
+Name: ubuntu-key
+
+Type: RSA
+
+Format: .pem
+
+Download and save
+
+✅ Step 6: Network Settings
+
+Allow:
+✔ SSH (22)
+✔ HTTP (80)
+
+Click Launch Instance
+
+Wait until status = Running
+
+🔐 PART 3: Connect to Ubuntu EC2
+
+In terminal:
+
+chmod 400 ubuntu-key.pem
+ssh -i ubuntu-key.pem ubuntu@<public-ip>
+
+
+Example:
+
+ssh -i ubuntu-key.pem ubuntu@13.233.xx.xx
+
+🌐 PART 4: Install Apache on EC2
+sudo apt update
+sudo apt install apache2 -y
+sudo systemctl start apache2
+sudo systemctl enable apache2
+sudo systemctl status apache2
+
+
+Open browser:
+
+http://<public-ip>
+
+
+You will see Apache default page 🎉
+
+👤 PART 5: Create IAM User
+
+Go to:
+
+IAM → Users → Add User
+
+Service: AWS Identity and Access Management
+
+Steps:
+
+Username: terraform-user
+
+Access type: Programmatic access
+
+Attach policy: AdministratorAccess
+
+Create user
+
+Save:
+
+Access Key ID
+
+Secret Access Key
+
+💻 PART 6: Install AWS CLI on Ubuntu
 sudo apt update -y
 sudo apt install unzip curl -y
 
-Install AWS CLI
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 sudo ./aws/install
 
-Configure AWS CLI
+aws --version
+
+
+Configure:
+
 aws configure
 
 
 Enter:
 
-• Access Key
-• Secret Key
-• Region (example: us-east-1)
-• Output: json
+Access Key
 
-PART 4: INSTALL TERRAFORM
+Secret Key
+
+Region (e.g., us-east-1)
+
+Output: json
+
+🏗 PART 7: Install Terraform
+
+Terraform is developed by HashiCorp
+
 sudo apt update -y
-sudo apt install gnupg software-properties-common curl -y
+sudo apt install -y gnupg software-properties-common curl
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+
 echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+
 sudo apt update -y
 sudo apt install terraform -y
 
-
-Check:
-
 terraform -version
 
-PART 5: CLONE TERRAFORM PROJECT
-git clone https://github.com/jagadeeshkanna97/terraform-dev.git
-cd terraform-dev
+📂 PART 8: Terraform Project Setup
+mkdir terraform-ec2
+cd terraform-ec2
 
-PART 6: RUN TERRAFORM COMMANDS
-Initialize
+
+Create:
+
+main.tf
+variables.tf
+
+🚀 PART 9: Terraform Commands
+
+Initialize:
+
 terraform init
 
-Plan
+
+Validate:
+
+terraform validate
+
+
+Plan:
+
 terraform plan
 
-Apply
+
+Apply:
+
 terraform apply
 
 
@@ -121,23 +246,11 @@ Type:
 yes
 
 
-✔ EC2 instance created
-✔ Security group created
-✔ Infrastructure deployed
+Check state:
 
-OPTIONAL: DESTROY RESOURCES
+terraform state list
+
+
+Destroy resources:
+
 terraform destroy
-
-
-Type:
-
-yes
-
-✅ FINAL OUTPUT OF DAY 5
-
-✔ AWS Account Created
-✔ IAM User Created
-✔ AWS CLI Configured
-✔ Terraform Installed
-✔ GitHub Terraform Project Cloned
-✔ EC2 Created Using Terraform
