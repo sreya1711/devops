@@ -1,0 +1,179 @@
+1️⃣ Install Docker in Ubuntu
+Update system
+sudo apt update
+sudo apt upgrade -y
+
+Install required packages
+sudo apt install ca-certificates curl -y
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+sudo apt update
+
+Install Docker Engine
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+
+Start & Enable Docker
+sudo systemctl start docker
+sudo systemctl enable docker
+
+Give permission to user
+sudo usermod -aG docker $USER
+newgrp docker
+
+Verify installation
+docker --version
+docker run hello-world
+
+2️⃣ Docker Basic Commands
+docker --version
+docker info
+docker images
+docker ps
+docker ps -a
+docker pull nginx
+docker run nginx
+docker stop container_id
+docker rm container_id
+docker rmi image_name
+
+3️⃣ Docker Image Workflow
+Build image
+docker build -t image_name:tag .
+
+List images
+docker images
+
+Run container
+docker run -d -p host_port:container_port image_name:tag
+
+Stop & Remove
+docker stop container_name
+docker rm container_name
+docker rmi image_name
+
+4️⃣ Docker Hub Workflow
+Login
+docker login
+
+Tag image
+docker tag image_name:tag username/repository:tag
+
+Push image
+docker push username/repository:tag
+
+Pull image
+docker pull username/repository:tag
+
+🚀 DOCKER NODE JS EXPRESS APPLICATION – STEP BY STEP
+STEP 1: Check Node.js
+node -v
+npm -v
+
+
+If not installed → install Node.js.
+
+STEP 2: Create Project
+mkdir docker-basic-app
+cd docker-basic-app
+
+STEP 3: Create package.json
+nano package.json
+
+
+Paste:
+
+{
+  "name": "docker-basic-app",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
+
+
+Save & exit.
+
+STEP 4: Install Dependencies
+npm install
+
+STEP 5: Create app.js
+nano app.js
+
+
+Paste:
+
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Hello from Docker!');
+});
+
+app.listen(3000, () => {
+  console.log('App running on port 3000');
+});
+
+STEP 6: Test Locally
+node app.js
+
+
+Open browser:
+
+http://localhost:3000
+
+
+Stop:
+
+Ctrl + C
+
+STEP 7: Create Dockerfile
+nano Dockerfile
+
+
+Paste:
+
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3000
+CMD ["node", "app.js"]
+
+STEP 8: Build Docker Image
+docker build -t docker-basic-app .
+
+STEP 9: Run Container
+docker run -d -p 3000:3000 docker-basic-app
+
+STEP 🔟 Check Running Container
+docker ps
+
+
+Open:
+
+http://localhost:3000
+
+
+Output:
+
+Hello from Docker!
+
+1️⃣1️⃣ Stop & Remove
+docker stop container_id
+docker rm container_id
+docker rmi docker-basic-app
+
+📂 Project Structure
+docker-basic-app/
+│
+├── app.js
+├── package.json
+├── package-lock.json
+├── Dockerfile
+└── node_modules/
