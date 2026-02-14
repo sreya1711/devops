@@ -10,7 +10,6 @@ Go to:
 
 https://aws.amazon.com
 
-
 Click Create an AWS Account
 
 ✅ Step 2: Enter Email & Account Name
@@ -36,7 +35,6 @@ Click Continue
 Select:
 
 Personal
-
 
 Fill:
 
@@ -75,9 +73,7 @@ Account activation may take a few minutes.
 🔹 Go to EC2
 
 Search:
-
 EC2
-
 
 Open Amazon EC2
 
@@ -124,7 +120,6 @@ In terminal:
 chmod 400 ubuntu-key.pem
 ssh -i ubuntu-key.pem ubuntu@<public-ip>
 
-
 Example:
 
 ssh -i ubuntu-key.pem ubuntu@13.233.xx.xx
@@ -136,11 +131,9 @@ sudo systemctl start apache2
 sudo systemctl enable apache2
 sudo systemctl status apache2
 
-
 Open browser:
 
 http://<public-ip>
-
 
 You will see Apache default page 🎉
 
@@ -178,11 +171,9 @@ sudo ./aws/install
 
 aws --version
 
-
 Configure:
 
 aws configure
-
 
 Enter:
 
@@ -213,7 +204,6 @@ terraform -version
 mkdir terraform-ec2
 cd terraform-ec2
 
-
 Create:
 
 main.tf
@@ -225,31 +215,25 @@ Initialize:
 
 terraform init
 
-
 Validate:
 
 terraform validate
-
 
 Plan:
 
 terraform plan
 
-
 Apply:
 
 terraform apply
-
 
 Type:
 
 yes
 
-
 Check state:
 
 terraform state list
-
 
 Destroy resources:
 
